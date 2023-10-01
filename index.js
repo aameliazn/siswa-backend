@@ -5,6 +5,18 @@ const bodyParser = require("body-parser");
 const client = require("./connection");
 const response = require("./response");
 
+const middleware = (req, res, next) => {
+  if (req?.query?.token == "amelia") {
+    next();
+  } else {
+    res.send("forbidden!");
+  }
+};
+
+app.use(middleware);
+// bisa pakai cara disimpan setelah path dan sebelum callback
+// app.get("/api/siswa", middleware, (req, res) => {});
+
 app.use(bodyParser.json());
 
 app.get("/api/siswa", (req, res) => {
